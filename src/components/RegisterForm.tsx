@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
 
-// 🔒 Валідація через Yup
+
 const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
@@ -28,7 +28,7 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); // <- хук навігації
+  const navigate = useNavigate(); 
 
   const {
     register,
@@ -47,7 +47,7 @@ export default function Register() {
       setSuccess("Account successfully created! 🎉");
       reset();
 
-      // ⏳ Затримка перед редиректом
+
       setTimeout(() => {
         navigate("/");
       }, 2000); // 2 секунди
@@ -72,7 +72,7 @@ export default function Register() {
           Create Account ✨
         </h2>
 
-        {/* Email */}
+       
         <div className="mb-4 relative">
           <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
           <input
@@ -86,7 +86,7 @@ export default function Register() {
           )}
         </div>
 
-        {/* Password */}
+   
         <div className="mb-4 relative">
           <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
           <input
@@ -107,11 +107,11 @@ export default function Register() {
           )}
         </div>
 
-        {/* Status messages */}
+  
         {error && <p className="text-red-500 text-center mb-2">{error}</p>}
         {success && <p className="text-green-500 text-center mb-2">{success}</p>}
 
-        {/* Submit */}
+     
         <button
           disabled={isSubmitting}
           className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50"

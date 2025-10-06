@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
+
 import { useAuthStore } from "../store/userStore";
-import { LogoutButton } from "../src/components/LogoutButton";
 import Header from "../src/components/Header";
 export default function Home() {
   const { user } = useAuthStore();

@@ -7,13 +7,12 @@ export default function Header() {
 
   return (
     <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
-      {/* Лівий блок (можеш залишити пустим або логотип) */}
+ 
       <div className="w-1/3"></div>
 
-      {/* Центр */}
+ 
       <h1 className="text-xl text-center w-1/3">Trip Planner</h1>
 
-      {/* Правий блок - навігація і Logout */}
       <div className="flex items-center justify-end w-1/3 space-x-4">
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>

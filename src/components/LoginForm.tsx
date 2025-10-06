@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase";
-import { useNavigate } from "react-router-dom"; // <- імпортуємо
+import { useNavigate } from "react-router-dom"; 
 
-// ✅ Валідація через Yup
+
 const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
@@ -25,7 +25,7 @@ type FormData = {
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // <- хук навігації
+  const navigate = useNavigate(); 
 
   const {
     register,
@@ -41,7 +41,7 @@ export default function Login() {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       reset();
-      navigate("/"); // <- перекидуємо на головну сторінку після успіху
+      navigate("/"); 
     } catch (err: any) {
       if (err.code === "auth/user-not-found") setError("User not found.");
       else if (err.code === "auth/wrong-password") setError("Incorrect password.");
@@ -102,10 +102,10 @@ export default function Login() {
           )}
         </div>
 
-        {/* Error */}
+      
         {error && <p className="text-red-500 text-center mb-2">{error}</p>}
 
-        {/* Submit */}
+       
         <button
           disabled={isSubmitting}
           className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-xl hover:bg-indigo-700 transition-all disabled:opacity-50"

@@ -10,8 +10,10 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { sendInviteEmail } from "../src/utils/sendInviteEmail";
+
 import { useAuthStore } from "../store/userStore";
+import  {sendInviteEmail}   from "../src/utils/sendInviteEmailService";
+
 
 export default function TripAccessPage() {
   const { id } = useParams<{ id?: string }>();
@@ -26,53 +28,51 @@ export default function TripAccessPage() {
 
   const handleAddCollaborator = async () => {
     setCollError(null);
-    setSuccessMsg(null);
+  const email = collEmail.trim().toLowerCase();
 
-    const email = collEmail.trim().toLowerCase();
+  if (!email) return setCollError("Введіть email");
+  if (email === user?.email)
+    return setCollError("Не можна запросити себе");
 
-    if (!email) return setCollError("Введіть email");
-    if (email === user?.email) return setCollError("Не можна запросити себе");
+  try {
+    setCollLoading(true);
 
-    try {
-      setCollLoading(true);
-
-      // Перевіряємо, чи вже є активне запрошення
-      const q = query(
-        collection(db, "invites"),
-        where("email", "==", email),
-        where("tripId", "==", id),
-        
-      );
-      const existing = await getDocs(q);
-      if (!existing.empty) {
-        setCollError("Вже є активне запрошення для цього email");
-        setCollLoading(false);
-        return;
-      }
-
-      // Генеруємо токен
-      const token = crypto.randomUUID();
-
-      // Додаємо документ у Firestore
-      await addDoc(collection(db, "invites"), {
-        email,
-        tripId: id,
-        token,
-        accepted: false,
-        createdAt: serverTimestamp(),
-      });
-
-
-      await sendInviteEmail(email, id, token);
-
-      setSuccessMsg(`Інвайт надіслано на ${email}`);
-      setCollEmail("");
-    } catch (e: any) {
-      console.error("add collaborator error", e);
-      setCollError(e?.message ?? "Не вдалося надіслати запрошення");
-    } finally {
+   
+    const q = query(
+      collection(db, "invites"),
+      where("email", "==", email),
+      where("tripId", "==", id),
+    );
+    const existing = await getDocs(q);
+    if (!existing.empty) {
+      setCollError("Вже є активне запрошення для цього email");
       setCollLoading(false);
+      return;
     }
+
+ 
+    const token = crypto.randomUUID();
+
+  
+    await addDoc(collection(db, "invites"), {
+      email,
+      tripId: id,
+      token,
+      accepted: false,
+      createdAt: serverTimestamp(),
+    });
+
+ 
+    await sendInviteEmail(email, `${window.location.origin}/trips/${id}/access?token=${token}`);
+
+    alert("Інвайт надіслано! Перевірте пошту ✉️");
+    setCollEmail("");
+  } catch (e: any) {
+    console.error("add collaborator error", e);
+    setCollError(e?.message ?? "Не вдалося надіслати запрошення");
+  } finally {
+    setCollLoading(false);
+  }
   };
 
   return (

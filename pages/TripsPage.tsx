@@ -73,7 +73,7 @@ export default function TripsPage() {
 
         {user && <TripForm ownerId={user.uid} onCreate={payload => create(payload)} />}
 
-        {/* Search + Sort controls extracted to component */}
+    
         <SearchSortBar
           search={search}
           onSearch={setSearch}

@@ -7,7 +7,9 @@ import Home from "../pages/Home";
 import type { JSX } from "react";
 import TripsPage from "../pages/TripsPage";
 import TripDetailsPage from "../pages/TripDetailsPage";
-
+import Accept from "../pages/AcceptInvitePage";
+import AcceptInvitePage from "../pages/AcceptInvitePage";
+import TripAccessPage from "../pages/TripAccessPage";
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const { user, loading } = useAuthStore();
   if (loading) return <p>Loading...</p>;
@@ -30,7 +32,10 @@ export default function App() {
   />
   <Route path="*" element={<Navigate to="/" />} />
    <Route path="/trips/:id" element={<TripDetailsPage />} />
-  
+
+        <Route path="/accept-invite" element={<Accept />} />
+        <Route path="/trips/:id/access" element={<TripAccessPage />} />
+<Route path="/accept-invite" element={<AcceptInvitePage />} />
 </Routes>
 
   );

@@ -1,15 +1,9 @@
+import type { Props } from "../../types/searchProps";
+
 
 export type SortKey = "title" | "startDate";
 export type SortOrder = "asc" | "desc";
 
-type Props = {
-  search: string;
-  onSearch: (v: string) => void;
-  sortKey: SortKey;
-  onSortKey: (k: SortKey) => void;
-  sortOrder: SortOrder;
-  onToggleSortOrder: () => void;
-};
 
 export default function SearchSortBar({ search, onSearch, sortKey, onSortKey, sortOrder, onToggleSortOrder }: Props) {
   return (

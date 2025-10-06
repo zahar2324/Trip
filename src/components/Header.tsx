@@ -6,19 +6,35 @@ export default function Header() {
   const { user } = useAuthStore();
 
   return (
-    <header className="bg-gray-800 text-white p-4 flex items-center justify-between">
- 
-      <div className="w-1/3"></div>
+    <header className="bg-indigo-600 text-white shadow-md p-4 flex items-center justify-between">
+  
+      <Link to="/" className="flex items-center space-x-2">
+        <div className="bg-white text-indigo-600 font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-md">
+          TP
+        </div>
+        <span className="text-2xl font-semibold">Trip Planner</span>
+      </Link>
 
- 
-      <h1 className="text-xl text-center w-1/3">Trip Planner</h1>
-
-      <div className="flex items-center justify-end w-1/3 space-x-4">
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/trips">My Trips</Link>
-        {user && <LogoutButton />}
-      </div>
+      <nav className="flex items-center space-x-4">
+        {!user && (
+          <>
+            <Link to="/login" className="hover:bg-indigo-500 px-3 py-1 rounded transition">
+              Login
+            </Link>
+            <Link to="/register" className="hover:bg-indigo-500 px-3 py-1 rounded transition">
+              Register
+            </Link>
+          </>
+        )}
+        {user && (
+          <>
+            <Link to="/trips" className="hover:bg-indigo-500 px-3 py-1 rounded transition">
+              My Trips
+            </Link>
+            <LogoutButton />
+          </>
+        )}
+      </nav>
     </header>
   );
 }
